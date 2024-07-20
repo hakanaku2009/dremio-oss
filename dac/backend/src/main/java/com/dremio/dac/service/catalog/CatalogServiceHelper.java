@@ -245,7 +245,7 @@ public class CatalogServiceHelper {
   private static Catalog createCatalog(
       CatalogService catalogService, SecurityContext securityContext) throws UnsupportedOperationException{
         logger.info("[Duy] In createCatalog: " + securityContext.getUserPrincipal().getName());
-        if(AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "CREATE_CATALOG")){
+        if(!AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "CREATE_CATALOG")){
           throw new IllegalArgumentException("User " + securityContext.getUserPrincipal().getName() + " khong co quyen tao catalog.");
         }
     return catalogService.getCatalog(
@@ -941,7 +941,7 @@ public class CatalogServiceHelper {
   protected CatalogEntity createDataset(Dataset dataset, NamespaceAttribute... attributes)
       throws NamespaceException {
     logger.info("[Duy] in createDataset: ");     
-    if(AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "CREATE_DATASET")){
+    if(!AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "CREATE_DATASET")){
       throw new IllegalArgumentException("User " + securityContext.getUserPrincipal().getName() + " khong co quyen tao dataset.");
     }
      
@@ -1095,7 +1095,7 @@ public class CatalogServiceHelper {
   private void updateDataset(Dataset dataset, NamespaceAttribute... attributes)
       throws NamespaceException, IOException {
     logger.info("[Duy] in updateDataset: ");            
-    if(AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "UPDATE_DATASET")){
+    if(!AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "UPDATE_DATASET")){
       throw new IllegalArgumentException("User " + securityContext.getUserPrincipal().getName() + " khong co quyen cap nhat dataset.");
     }          
     validateDataset(dataset);
@@ -1466,7 +1466,7 @@ public class CatalogServiceHelper {
   protected CatalogEntity createSpace(Space space, NamespaceAttribute... attributes)
       throws NamespaceException {
     logger.info("[Duy] in createSpace: " + space.getName());             
-    if(AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "CREATE_SPACE")){
+    if(!AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "CREATE_SPACE")){
       throw new IllegalArgumentException("User " + securityContext.getUserPrincipal().getName() + " khong co quyen tao space.");
     }            
     String spaceName = space.getName();
@@ -1495,7 +1495,7 @@ public class CatalogServiceHelper {
   protected void updateSpace(Space space, NamespaceAttribute... attributes)
       throws NamespaceException {
     logger.info("[Duy] in updateSpace: " + space.getName());   
-    if(AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "UPDATE_SPACE")){
+    if(!AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "UPDATE_SPACE")){
       throw new IllegalArgumentException("User " + securityContext.getUserPrincipal().getName() + " khong co quyen cap nhat space.");
     }    
     NamespaceKey namespaceKey = new NamespaceKey(space.getName());
@@ -1510,7 +1510,7 @@ public class CatalogServiceHelper {
 
   protected void deleteSpace(SpaceConfig spaceConfig, String version) throws NamespaceException {
     logger.info("[Duy] in deleteSpace: " + spaceConfig.getName());     
-    if(AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "DELETE_SPACE")){
+    if(!AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "DELETE_SPACE")){
       throw new IllegalArgumentException("User " + securityContext.getUserPrincipal().getName() + " khong co quyen cap nhat space.");
     }      
     namespaceService.deleteSpace(new NamespaceKey(spaceConfig.getName()), version);
@@ -1519,7 +1519,7 @@ public class CatalogServiceHelper {
   protected CatalogEntity createSource(Source source, NamespaceAttribute... attributes)
       throws NamespaceException, ExecutionSetupException {
       logger.info("[Duy] in createSource: ");      
-      if(AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "CREATE_SOURCE")){
+      if(!AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "CREATE_SOURCE")){
         throw new IllegalArgumentException("User " + securityContext.getUserPrincipal().getName() + " khong co quyen tao source.");
       }      
     SourceConfig sourceConfig = sourceService.createSource(source.toSourceConfig(), attributes);
@@ -1708,7 +1708,7 @@ public class CatalogServiceHelper {
   protected Folder createFolder(Folder folder, NamespaceAttribute... attributes)
       throws NamespaceException {
     logger.info("[Duy] in createFolder: ");             
-    if(AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "CREATE_FOLDER")){
+    if(!AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "CREATE_FOLDER")){
       throw new IllegalArgumentException("User " + securityContext.getUserPrincipal().getName() + " khong co quyen tao folder.");
     }     
     validateFolder(folder);
@@ -1786,7 +1786,7 @@ public class CatalogServiceHelper {
   protected FolderConfig updateFolder(Folder folder, NamespaceAttribute... attributes)
       throws NamespaceException {
     logger.info("[Duy] in updateFolder: ");         
-    if(AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "UPDATE_FOLDER")){
+    if(!AuthorizationUtil.isAuthorized(securityContext.getUserPrincipal().getName(), "UPDATE_FOLDER")){
       throw new IllegalArgumentException("User " + securityContext.getUserPrincipal().getName() + " khong co quyen cap nhat folder.");
     }                                       
     final NameSpaceContainer rootContainer = getRootContainer(folder.getPath());
