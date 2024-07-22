@@ -67,7 +67,6 @@ public class PutSourceResource {
   @Consumes(MediaType.APPLICATION_JSON)
   public SourceUI putSource(SourceUI source)
       throws NamespaceException, UserNotFoundException, SourceNotFoundException {
-
     try {
       // Following are set at server side.
       source.setName(sourceName.getName());

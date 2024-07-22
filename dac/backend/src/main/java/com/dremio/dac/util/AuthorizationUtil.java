@@ -13,7 +13,6 @@ public final class AuthorizationUtil{
         Properties privilegeProps = new Properties();
 
         try{
-            logger.info("[Duy] user.dir: " + System.getProperty("user.dir"));
             roleProps.load(new FileInputStream(System.getProperty("user.dir") + "/roles.properties"));
             privilegeProps.load(new FileInputStream(System.getProperty("user.dir") + "/privileges.properties"));
             String roleStr = roleProps.getProperty(user.toUpperCase().trim()).trim();

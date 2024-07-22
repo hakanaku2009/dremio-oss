@@ -53,12 +53,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.dremio.dac.util.AuthorizationUtil;
+
 /** Rest resource for spaces. */
 @RestResource
 @Secured
 @RolesAllowed({"admin", "user"})
 @Path("/space/{space}")
 public class FolderResource {
+  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(FolderResource.class);
+        
   private final DatasetVersionMutator datasetService;
   private final NamespaceService namespaceService;
   private final CollaborationHelper collaborationHelper;
@@ -101,6 +105,11 @@ public class FolderResource {
   @Produces(MediaType.APPLICATION_JSON)
   public void deleteFolder(@PathParam("path") String path, @QueryParam("version") String version)
       throws NamespaceException, FolderNotFoundException {
+    String user = collaborationHelper.getSecurityContext().getUserPrincipal().getName();
+    logger.info("[Duy] In deleteFolder: " + path);
+    if(!AuthorizationUtil.isAuthorized(user, "DELETE_FOLDER")){
+      throw new ClientErrorException("User " + user + " không có quyền xóa folder.");
+    }
     FolderPath folderPath = FolderPath.fromURLPath(spaceName, path);
     if (version == null) {
       throw new ClientErrorException(GenericErrorMessage.MISSING_VERSION_PARAM_MSG);
@@ -121,6 +130,11 @@ public class FolderResource {
   @Consumes(MediaType.APPLICATION_JSON)
   public Folder createFolder(FolderName name, @PathParam("path") String path)
       throws NamespaceException {
+    String user = collaborationHelper.getSecurityContext().getUserPrincipal().getName();
+    logger.info("[Duy] In createFolder: " + path);
+    if(!AuthorizationUtil.isAuthorized(user, "CREATE_FOLDER")){
+      throw new IllegalArgumentException("User " + user + " không có quyền tạo folder.");
+    }        
     String fullPath = PathUtils.toFSPathString(Arrays.asList(path, name.toString()));
     FolderPath folderPath = FolderPath.fromURLPath(spaceName, fullPath);
 

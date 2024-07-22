@@ -399,7 +399,7 @@ public class CollaborationHelper {
     return namespaceService;
   }
 
-  protected SecurityContext getSecurityContext() {
+  public SecurityContext getSecurityContext() {
     return securityContext;
   }
 
